@@ -1,0 +1,3 @@
+##Note PROSES Learning by Doing
+ 
+Jadi Ini adalah proses "Learning by Doing" saya selama beberapa minggu. Proses "Learning by Doing" ini bermulai dari basic pengenalan configurasi django sampai pembuatan dasar CRUD pada beberapa contoh kasus Member dan bahkan pembuatan website News. Pada django-fundamental ini memiliki beberapa fitur untuk penampilan menampilkan data pada CRUD yang telah dibuat seperti data dari News. Fitur berikutnya yaitu proses authenticate yaitu berupa proses login untuk mengakses beberapa link yang hanya bisa diakses ketika hanya dengan login.
