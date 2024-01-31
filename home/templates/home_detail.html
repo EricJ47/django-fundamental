@@ -45,6 +45,8 @@
     {% else %}
     <p>Hanya pengguna yang login yang dapat memberikan komentar atau Membalas komentar. Silakan <a href="{% url 'login.index' %}">login</a>.</p>
   {% endif %}
+
+  
     <!-- Display replies to the comment -->
     {% for reply in comment.replies.all %}
       <p style="margin-left: 20px;">{{ reply.pengguna.username }} - {{ reply.waktu_komentar }}<br>
