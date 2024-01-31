@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Member Edit{% endblock title %}
+{% block content %}
+
+<a href="{%url 'member.index'%}">BACK</a>
+    <h2>Tambah Data</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div style="margin-bottom: 10px;">
+                {{field.label_tag}} {{field}}
+                <small>{{field.errors}}</small>
+            </div>
+        {% endfor %}
+        <input type="submit" value="update">
+    </form>
+
+{% endblock content %}
+

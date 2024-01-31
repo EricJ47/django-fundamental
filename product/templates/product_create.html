@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Product Create{% endblock title %}
+{% block content %} 
+
+<a href="{%url 'product.index'%}" class="btn btn-outline-info">BACK</a>
+    <h2>Tambah Data</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <div style="margin-bottom: 10px; " class="form-control">
+                {{field.label_tag}} {{field}}
+                <small>{{field.errors}}</small>
+            </div>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Submit" class="btn btn-outline-secondary">
+    </form>
+
+{% endblock content %}

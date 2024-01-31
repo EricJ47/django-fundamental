@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Member Pages{% endblock title %}
+{% block content %}
+<div class="html">
+    <div class="col-md-12">
+        <div >
+            <h2 class="mb-4"style="margin-left: 450px;" >Login/<a href="{% url 'register' %}" style="margin-top:10px;" class="btn btn-outline-secondary">register</a></h2>
+                {% if messages %}
+                <div class="error-messages alert alert-danger">
+                    {% for message in messages  %}
+                    {{ message }}
+                    
+                    {% endfor %}
+                </div>
+                
+                {% endif %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form  %}
+                <div>
+                    {{field.label_tag}} {{field}}
+                    <small>{{field.errors}} </small>
+                </div>
+                {% endfor %}
+                <input type="submit" value="submit" class="btn btn-primary">
+            </form>
+            
+        </div>
+        
+    </div>
+
+</div>
+
+{% endblock content %}
+
+
+
+  

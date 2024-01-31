@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}News Category Pages{% endblock title %}
+{% block content %}
+
+<h2 style="text-align: center;">{{title}}</h2>
+<ul>
+    
+    <a href="{%url 'article.create'%}" class="btn btn-outline-primary"> +Tambah Data</a>
+    <table class="table">
+        <tr>
+           <th>No</th>
+          <th>Judul</th>
+          <th>Kategori</th>
+          <th>Deskripsi</th>
+          <th>Tanggal Pembuatan</th>
+          <th>Image</th>
+          
+          <th>Action</th>
+        </tr>
+        {% for i in article%}
+        <tr>
+          <td class="table-light">{{forloop.counter}}</td>
+          <td>{{i.title}}</td>
+          <td>{{i.category.nama_category}}</td>
+          <td>{{i.deskripsi|truncatewords:80|safe}}</td>
+          <td class="table-light">{{i.tanggal}}</td>
+          <td><img src="{{i.image.url}}" alt="Uploaded Image" width="100" height="100"></td>
+          
+          <td>
+            <a href="{% url 'article.delete' i.id %}" class="btn btn-outline-danger">Delete</a> | <a href="{% url 'article.update' i.id %}" class="btn btn-outline-success">Edit</a> |
+            <a href="" class="btn btn-outline-info">Detail</a>
+          </td>
+        </tr>
+
+
+
+    {%endfor%}
+</ul>
+{% endblock content %}
+

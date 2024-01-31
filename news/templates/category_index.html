@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}News Category Pages{% endblock title %}
+{% block content %}
+
+<h2 style="text-align: center;">{{title}}</h2>
+<ul>
+    
+    <a href="{%url 'category.create'%}" class="btn btn-outline-primary"> +Tambah Data</a>
+    <table class="table">
+        <tr>
+           <th>No</th>
+          <th>nama kategori</th>
+          <th>Action</th>
+        </tr>
+        {% for i in category%}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{i.nama_category}}</td>
+          <td>
+            <a href="{% url 'category.delete' i.category_id %}" class="btn btn-outline-danger">Delete</a> | <a href="{% url 'category.update' i.category_id %}" class="btn btn-outline-success">Edit</a>
+          </td>
+        </tr>
+
+
+
+    {%endfor%}
+</ul>
+{% endblock content %}
+
+
+
+  
