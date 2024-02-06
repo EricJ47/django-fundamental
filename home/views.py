@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404,HttpResponseRedirect
-from news.models import Article, Category, Komentar
+from news.models import Article, Category, Komentar, ArticleLike
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -65,3 +66,40 @@ def tambah_komentar (request, slug, parent_id=None):
 
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', 'berita/<str:slug>'))
+
+
+def load_ajax(request):
+    return render(request, 'ajax.html')
+
+
+def ajax_data(request):
+    data = {
+        'nama': 'Ronaldo',
+        'alamat': 'sabu',
+        'club':[
+            {
+                "nama_club": "AL-nasr",
+                "tahun": '2019'
+            },
+            {
+                "nama_club": "PSG",
+                "tahun": '2021'
+            }
+        ]
+    }
+    return JsonResponse(data)
+
+
+
+def likey_ajax(request, id):
+   
+    
+    article = Article.objects.get(id=id)
+    ArticleLike.objects.create(article=article)
+
+    newsLikedCount = article.like.count()
+    
+    data = {
+        "newsLikedCount": newsLikedCount
+    }    
+    return JsonResponse(data)

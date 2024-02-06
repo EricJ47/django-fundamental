@@ -31,3 +31,6 @@ class Komentar(models.Model):
     isi_komentar = models.TextField()
     waktu_komentar = models.DateTimeField(auto_now_add=True)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+    
+class ArticleLike(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='like')

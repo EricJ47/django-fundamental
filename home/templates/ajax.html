@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Ajax{% endblock title %}
+
+
+{% block content %}
+
+<h1>ini ajax</h1>
+
+
+<button class="btn btn-primary" id="button">Show Data</button>
+
+<div id="tampilData">
+
+</div>
+<div id="tampilClub">
+
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('#button').click(function(){
+          $('#tampilData').html('<i>Loading...<i>')
+            
+          $.ajax({
+            type: "GET",
+            url: "/ajax/data/",
+            dataType: "json",
+            success: function (response) {
+                var result = `<p>Nama: ${response.nama}</p>  <p> ALamat: ${response.alamat}</p>`
+                setTimeout(() => {
+                    $('#tampilData').html(result)
+                }, 2000);
+                $("#tampilClub").html("<strong>Data Clubs:</strong>");
+                var club = response.club
+                club.forEach(function(club){
+                    setTimeout(() => {
+                        $("#tampilClub").append("<div><strong>Nama Club: " + club.nama_club  + " - Tahun: " + club.tahun + "</storng></div><br>");
+                    }, 2000);
+                    
+                });
+            }
+          });  
+
+        })
+        
+    });
+
+
+
+</script>
+
+{% endblock script %}

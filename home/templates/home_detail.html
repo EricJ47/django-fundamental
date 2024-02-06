@@ -8,7 +8,7 @@
       <div class="col-md-8">
       <article class="blog-post">
         <h2 class="display-5 link-body-emphasis mb-1">{{article.title}}</h2>
-        <p class="blog-post-meta">{{article.tanggal}}<a href="#">Eric Jamal</a></p><p>Total Views: {{article.total_views}}</p>
+        <p class="blog-post-meta">{{article.tanggal}}<a href="#">Eric Jamal</a></p><p>Total Views: {{article.total_views}}| <button class="btn btn-sm btn-info" id="btnLike" data-postid="{{article.id}}"> {{article.like.count}} suka</button></p>
         <img src="{{ article.image.url }}" alt="{{ article.title }}" style="width: 100%;height: 100%;object-fit: contain;">
         
           <p>{{article.deskripsi|safe}}</p>
@@ -34,18 +34,23 @@
     {{ comment.isi_komentar }}</p>
     
     {% if user.is_authenticated %}
+    <button id="displayButton">Display</button>
+    <button id="hideButton" style="display: none;">Hide</button>
+    <div id="contentToHide"> 
+      <!-- Form for replying to the comment -->
+      <form id="dropdownForm" method="post" action="{% url 'tambah_komentar.chained' article.slug comment.id %}" >
+        {% csrf_token %}
+        <label for="isi_komentar" class="form-label">Reply:</label><br>
+        <textarea name="isi_komentar" rows="2" cols="30" class="form-control"></textarea><br>
+        <input type="submit" value="Reply">
+      </form>
+      {% else %}
+      <p>Hanya pengguna yang login yang dapat memberikan komentar atau Membalas komentar. Silakan <a href="{% url 'login.index' %}">login</a>.</p>
+      </div>
+      {% endif %}
 
-    <!-- Form for replying to the comment -->
-    <form method="post" action="{% url 'tambah_komentar.chained' article.slug comment.id %}">
-      {% csrf_token %}
-      <label for="isi_komentar" class="form-label">Reply:</label><br>
-      <textarea name="isi_komentar" rows="2" cols="30" class="form-control"></textarea><br>
-      <input type="submit" value="Reply">
-    </form>
-    {% else %}
-    <p>Hanya pengguna yang login yang dapat memberikan komentar atau Membalas komentar. Silakan <a href="{% url 'login.index' %}">login</a>.</p>
-  {% endif %}
-
+    </div>
+  
   
     <!-- Display replies to the comment -->
     {% for reply in comment.replies.all %}
@@ -117,5 +122,61 @@
   </div>
    </div>
   </main>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  
+
   {% endblock content %}
 
+
+  {% block script %}
+
+<script>
+ // JavaScript (jQuery)
+ $(document).ready(function() {
+  // Ketika button display diklik
+  $("#displayButton").click(function() {
+      // Sembunyikan button display dan tampilkan button hide
+      $(this).hide();
+      $("#hideButton").show();
+      // Tampilkan konten yang ingin disembunyikan
+      $("#contentToHide").show();
+  });
+
+  // Ketika button hide diklik
+  $("#hideButton").click(function() {
+      // Sembunyikan button hide dan tampilkan button display
+      $(this).hide();
+      $("#displayButton").show();
+      // Sembunyikan konten yang ingin disembunyikan
+      $("#contentToHide").hide();
+  });
+});
+</script>
+
+
+<script>
+$(document).ready(function () {
+  $('#btnLike').click(function(){
+    var postId = $(this).data('postid')
+    $.ajax({
+      type: "GET",
+      url: `/berita/likey/${postId}`,
+      dataType: "json",
+      success: function (response) {
+        
+          $('#btnLike').text(`${response.newsLikedCount} suka`)
+      }
+    });
+
+  })
+
+});
+
+
+
+</script>
+
+
+
+{% endblock script %}
